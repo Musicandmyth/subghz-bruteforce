@@ -1,0 +1,18 @@
+App(
+    appid="subghz_bruteforce",
+    name="SubGHz Bruteforce",
+    apptype=FlipperAppType.EXTERNAL,
+    entry_point="subghz_bruteforce_app",
+    requires=[
+        "gui",
+        "dialogs",
+        "storage",
+        "notification",
+    ],
+    stack_size=4 * 1024,
+    fap_category="Sub-GHz",
+    fap_icon="icon.png",
+    fap_author="ravivmargalit",
+    fap_version="1.0",
+    fap_description="Sequentially transmit every .sub file in a folder - a Sub-GHz dictionary bruteforcer, like the IR universal remote but for radio.",
+)

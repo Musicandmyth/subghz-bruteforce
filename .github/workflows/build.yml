@@ -1,0 +1,33 @@
+name: Build FAP
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ufbt
+        run: pip install ufbt
+
+      - name: Deploy Momentum SDK
+        run: ufbt update --index-url=https://up.momentum-fw.dev/firmware/directory.json --channel=release
+
+      - name: Build FAP
+        run: ufbt
+
+      - name: Upload FAP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: subghz_bruteforce-fap
+          path: dist/*.fap
+          if-no-files-found: error
