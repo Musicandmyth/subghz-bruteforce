@@ -47,7 +47,7 @@ typedef struct {
     Storage* storage;
     DialogsApp* dialogs;
     NotificationApp* notifications;
-    SubGhzTx* tx;
+    SubGhzBfTx* tx;
 
     FuriString* folder;
     uint32_t file_count;
@@ -759,7 +759,8 @@ static SubGhzBfApp* subghz_bf_app_alloc(void) {
         "1. Select folder\n"
         "2. Set delay/repeats/loop\n"
         "3. Start\n\n"
-        "OK = pause, Back = stop.\n\n"
+        "Left/Right = skip, OK = pause,\n"
+        "Back = stop.\n\n"
         "Only transmit on frequencies\n"
         "and devices you are legally\n"
         "authorized to operate.");

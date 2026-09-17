@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-typedef struct SubGhzTx SubGhzTx;
+typedef struct SubGhzBfTx SubGhzBfTx;
 
 typedef enum {
     SubGhzTxResultOk,
@@ -29,16 +29,16 @@ typedef struct {
 } SubGhzTxFileInfo;
 
 /** Allocate the transmit engine (opens storage, radio device and keystore). */
-SubGhzTx* subghz_tx_alloc(void);
+SubGhzBfTx* subghz_tx_alloc(void);
 
 /** Free the transmit engine. */
-void subghz_tx_free(SubGhzTx* instance);
+void subghz_tx_free(SubGhzBfTx* instance);
 
 /** Power up the radio for a transmit session. Call once before a batch of files. */
-bool subghz_tx_session_begin(SubGhzTx* instance);
+bool subghz_tx_session_begin(SubGhzBfTx* instance);
 
 /** Put the radio back to sleep. Call once after a batch of files. */
-void subghz_tx_session_end(SubGhzTx* instance);
+void subghz_tx_session_end(SubGhzBfTx* instance);
 
 /**
  * Transmit a single .sub file (blocking until the transmission completes).
@@ -48,7 +48,7 @@ void subghz_tx_session_end(SubGhzTx* instance);
  * @param stop      optional abort flag, polled during transmission (may be NULL)
  */
 SubGhzTxResult subghz_tx_transmit_file(
-    SubGhzTx* instance,
+    SubGhzBfTx* instance,
     const char* path,
     SubGhzTxFileInfo* info,
     volatile bool* stop);

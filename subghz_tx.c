@@ -13,14 +13,14 @@
 
 #define TAG "SubGhzBfTx"
 
-struct SubGhzTx {
+struct SubGhzBfTx {
     Storage* storage;
     SubGhzEnvironment* environment;
     const SubGhzDevice* device;
 };
 
-SubGhzTx* subghz_tx_alloc(void) {
-    SubGhzTx* instance = malloc(sizeof(SubGhzTx));
+SubGhzBfTx* subghz_tx_alloc(void) {
+    SubGhzBfTx* instance = malloc(sizeof(SubGhzBfTx));
     instance->storage = furi_record_open(RECORD_STORAGE);
 
     subghz_devices_init();
@@ -41,7 +41,7 @@ SubGhzTx* subghz_tx_alloc(void) {
     return instance;
 }
 
-void subghz_tx_free(SubGhzTx* instance) {
+void subghz_tx_free(SubGhzBfTx* instance) {
     furi_assert(instance);
     subghz_environment_free(instance->environment);
     subghz_devices_deinit();
@@ -49,14 +49,14 @@ void subghz_tx_free(SubGhzTx* instance) {
     free(instance);
 }
 
-bool subghz_tx_session_begin(SubGhzTx* instance) {
+bool subghz_tx_session_begin(SubGhzBfTx* instance) {
     furi_assert(instance);
     if(!instance->device) return false;
     subghz_devices_begin(instance->device);
     return true;
 }
 
-void subghz_tx_session_end(SubGhzTx* instance) {
+void subghz_tx_session_end(SubGhzBfTx* instance) {
     furi_assert(instance);
     if(!instance->device) return;
     subghz_devices_idle(instance->device);
@@ -83,9 +83,7 @@ static FuriHalSubGhzPreset subghz_tx_preset_from_name(const char* name, bool* is
     return FuriHalSubGhzPresetCustom;
 }
 
-static SubGhzTxResult subghz_tx_wait_complete(
-    SubGhzTx* instance,
-    volatile bool* stop) {
+static SubGhzTxResult subghz_tx_wait_complete(SubGhzBfTx* instance, volatile bool* stop) {
     SubGhzTxResult result = SubGhzTxResultOk;
     while(!subghz_devices_is_async_complete_tx(instance->device)) {
         if(stop && *stop) {
@@ -99,7 +97,7 @@ static SubGhzTxResult subghz_tx_wait_complete(
 }
 
 SubGhzTxResult subghz_tx_transmit_file(
-    SubGhzTx* instance,
+    SubGhzBfTx* instance,
     const char* path,
     SubGhzTxFileInfo* info,
     volatile bool* stop) {
