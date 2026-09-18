@@ -30,12 +30,33 @@ Built for **Momentum firmware** (SDK `mntm-012`) using `ufbt`.
 | `subghz_tx.c` / `subghz_tx.h` | Sub-GHz transmit engine — parses a `.sub` file and keys the radio. |
 | `icon.png` | 10×10 app icon. |
 
-## Building
+## Build online (recommended — no toolchain needed)
 
-The source is complete and was written against the real Momentum `mntm-012` SDK
-headers. It was **not compiled in the environment it was authored in** because
-that machine blocks `update.flipperzero.one` (where `ufbt` fetches the ARM
-toolchain). On a normal machine with internet access:
+You can compile this straight from the GitHub repo in your browser; nothing to
+install locally.
+
+1. Make sure this repo is **public** and your latest changes are **pushed**.
+2. Go to **https://flipc.org** (or the mirror **https://fzoc.kanjian.fr**).
+3. Paste your repository URL, e.g. `https://github.com/<you>/subghz-bruteforce`.
+4. Pick the firmware target: choose **Momentum** if it's listed. If it isn't,
+   pick **Unleashed** — Momentum is a fork of Unleashed and runs Unleashed apps.
+5. Build, then **download `subghz_bruteforce.fap`**.
+6. Copy it to `SD/apps/Sub-GHz/` on the Flipper (or drag it in via qFlipper).
+
+These sites just run `ufbt` on the repo for you, so the repo only needs a valid
+`application.fam` at its root — which it already has.
+
+## Build with GitHub Actions
+
+This repo also includes `.github/workflows/build.yml`, which builds the FAP on
+every push and uploads it as a run artifact (**Actions** tab → latest run →
+**Artifacts → subghz_bruteforce-fap**). It targets Momentum via ufbt.
+
+## Build locally
+
+The source was written against the real Momentum `mntm-012` SDK headers. On a
+machine with internet access to `update.flipperzero.one` (needed for the ARM
+toolchain):
 
 ```powershell
 # One-time: install the build tool and point it at Momentum's SDK
